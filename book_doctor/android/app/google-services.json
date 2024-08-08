@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "618987461070",
+    "project_id": "book-a-doctor-460bc",
+    "storage_bucket": "book-a-doctor-460bc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:618987461070:android:662d2999b0f3cf2640739f",
+        "android_client_info": {
+          "package_name": "com.example.book_doctor"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCU2UpmXCwCBn4CXFSqsMSOCD8rExH6wjs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

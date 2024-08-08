@@ -1,0 +1,197 @@
+{
+    "LanguageArabic" : "Arabic" ,
+    "LanguageEnglish": "English",
+    "LanguageSpanish": "Spanish",
+    "LanguageJapanese": "Japanese",
+
+    "Payment": "Payment",
+    "Language": "Language",
+    "favourite": "Favorite",
+    "DarkMode": "Dark Mode",
+    "Logout": "Log out",
+    "CreateAccount": "Create your account",
+
+    "Profile": "Profile",
+    "Gender": "Gender",
+    "Female": "Female",
+    "Male": "Male",
+
+    "Email": "Email",
+    "Name": "Name",
+    "PhoneNumber": "Phone Number",
+    "Address": "Address",
+    "MedicalHistory": "Medical history",
+    "CurrentMedical": "Current medical",
+
+    "NewPorfilePicture": "New Profile Picture",
+    "Gallrey": "Choose from Gallery",
+    "Camara": "Capture with Camera",
+
+    "Login": "Login",
+    "LoginInYourAccount": "Login in your Account",
+    "SignCreateYouraccunt": "Create your Account",
+    "Password": "Password",
+    "LoginGoogle": "Login with Google",
+    "DontHvaeAccount": "Don't have an account? ",
+    "HaveAccount": "Have an account? ",
+    "signup": "Sign up",
+    "SignGoogle": "Sign up with Google",
+    "ConfirmPassword": "Confirm Passwork",
+
+    "Success": "Success !",
+    "MessageSuccess": "Profile update successful! Thank you for keeping your information current",
+    "Failed" : "Failed !",
+    "MessageWrong": "We encountered an error while updating your profile. Please try again or contact support if the issue persists.",
+    "Save": "Save",
+    "GoBack": "Go back" ,
+
+    "AddName": "Please add your name.",
+    "AddAddress" : "Please provide your address.",
+    "SelecGender": "Please select gender.",
+
+    "Welcome" : "Welcome! " ,
+    "MakeAcounnt" : "Let's get started by creating your account.",
+    "ErrorMessage": "Uh-oh! Looks like our doctors are taking a little nap. Try again soon!",
+
+    "OurDoctors" : "Healthcare Team",
+    "Category": "Category",
+
+    "DoctorDetails": "Doctor Details",
+    "AboutDoctor": "Biography",
+    "Suchedules": "Schedules",
+    "Schedule" : "Schedule",
+    "AvailableTime" : "Available time",
+    "Available": "Available",
+    "Notavailable" : "Not available",
+    "readMore" : "Read more",
+    "readless" : "Read less",
+    "Book" : "Book Appointment",
+    "AskDoctorAI" : "AskDoctorAI" ,
+    "ErrorINAI": "Oops! It seems like we hit a snag. Don't worry, our team is on it! Please try again soon. Thanks for your patience!" ,
+    "ErrorProfile" : "Oops! We couldn't fetch your date. Sorry about that! We're fixing it now.",
+    "EmptyMessage": "Your message didn't come through. Type something and let's chat!",
+
+    "FavoriteList": "My Favorite Doctors" ,
+    "EmptyFavoriteList" : "Your favorite doctors list is waiting for your personal touch. Add your favorites to keep them close!" ,
+    "ErrorGetDays" : "Oops! Can't fetch the days right now. Please check back soon. Thanks for your patience!",
+
+    "create": "Create Your Profile" ,
+    "messagecreate" : " Please create your profile to book an appointment. This helps us serve you better. Thank you!",
+
+    "Specialty" : "Specialty" ,
+
+    "Note" : " Notes" ,
+    "EXP" : "Years of Experience" ,
+    "expHome" : "EXP",
+    "price" : "Consultation Fee",
+    "ChooseDate" : "Please choose both a date and time for your appointment before proceeding.",
+    "SuccessBook" : "Your appointment has been successfully booked! We look forward to seeing you.",
+    "ErrorBookl" : "Something went wrong while trying to book your appointment. Please try again later. If the problem persists, contact support for assistance.",
+    "ErrorBookHeadline" : "Booking Unsuccessful",
+    "ErrorSchedule": "We apologize for the inconvenience. We are actively working to resolve the issue",
+    "ErrorDeleteSchedule" : "Oops! Something went wrong while trying to delete the item from your schedule. Please try again later.",
+    "ErrorBook" : "Oops! Something went wrong while trying to book your appointment. Please try again later.",
+    "Cancel" : "Cancel",
+    "FindDoctor" : "Search for Your Doctor",
+
+
+    "All" : "All" ,
+    "Psychologist" : "Psychologist",
+    "Orthopedist" : "Orthopedist",
+    "Physicaltherapy" : "Physical therapy",
+    "Dermatologist" : "Dermatologist",
+    "Pediatrician" : "Pediatrician",
+    "Neurologist" : "Neurologist",
+    "Cardiologist" : "Cardiologist" ,
+
+
+    "Upcoming" : "Upcoming" ,
+    "Complete" : "Complete" ,
+
+    "WelcomeAdmin" : "Admin Dashboard" ,
+    "addNewDoctor" : "Create Doctor Profile",
+    "Books" : "Total appointments",
+    "Users" : "Users",
+    "Doctors" : "Doctors",
+    "MangeBooks" : "Manage Appointment Books",
+    "BooksInProgress" : "Books In Progress",
+    "SuccessfullyBooked" : "Successfully Booked",
+    "NOTAVAILABLE" : "Not available" ,
+    "Specialization" : "Specialization",
+    "Bio" : "Bio" ,
+    "Youhaventchooseyet" : "You haven't choose yet.",
+    "selectDate" : "Click the button to choose a date" ,
+    "rRating" : "Rating",
+
+
+    "shortName" :  "Please write at least 5 letters before saving." ,
+    "shortBio" :  "Please write at least 170 letters before saving." ,
+    "ChooseYear" : "Please select the number of years of experience before saving.",
+    "ChooseRating" : "Please choose a rating before saving.",
+    "ChooseCategory" : "Please select a specialization before saving.",
+    "empty" : "Please write something.",
+
+    "didnTCategory" : "You didn't choose Specialization" ,
+    "didnTrrating" : "You didn't choose Rating",
+    "didnTyears" : "You didn't choose years of experience",
+    "didnTimage" : "Please upload a photo for the doctor.",
+
+
+    "SuccessDoctorHeadS" : "Success!",
+    "SUccessDoctorMessage" : "The doctor has been successfully added to the system.",
+    "FailedDoctorHeadF" : "Failed" ,
+    "FailedDoctorMessageF" : " Unable to add new doctor. Please try again, contact support for assistance.",
+    "Close" : "Close" ,
+    "Addschdule" : "Add Schedule" ,
+    "tryLater" : "Failed ,Please try later.",
+    "SuccessAddDATE" : "The schedule has been added successfully 🌟",
+    "SuccessDeleteSchedule" : "The date has been successfully removed ",
+
+
+
+
+    "PaymentAlways" : "Use Visa as Default",
+    "titlePayment" : "Make Visa your default payment method for faster checkouts." ,
+    "Empty" : "This can't be empty",
+    "donTmatch" : "Passwords don't match.",
+    "weakpassword" : "Password is too weak. Please choose a stronger one." ,
+    "emailexait" : "Email already in use. Please try another one." ,
+    "trylater" : "Something went wrong. Please try again later.",
+    "wrongPassword" : "The password you entered is incorrect. Please try again",
+    "noemailexit" : "Email not found. Please check or sign up." ,
+    "nointernet" : "Oops! We can't connect right now. Please check your internet and try again.",
+    "tryagain" : "Unable to Login with Google, Please try later." ,
+    "checkEmail" : "Please check your email and complete the verification process. Thank you!",
+    "headlinecheck" : "Verification Email",
+    "verifyAgin" : "Send Verification Link Again",
+    "NotVerify" : "Please verify your email to complete registration." ,
+    "waitverify" : "You have requested a verification email recently. Please give it a bit of time before trying again.",
+    "emailsent" : "Verification email sent. Please check your email." ,
+    "headlineaskverify" : "Email Not Verified" ,
+    "messageaskverify" : "Your email isn't verified yet. Do you want to verify it now?",
+    "verify" : "Verify",
+    "timerEmailresend" : "Resend verification email in: " ,
+    "checkveifyButton" : "Check Verification Status" ,
+    "successVeirfyMessage" : "Your email has been verified. You can now log in to your account and start using the app.",
+    "LoginAfterVerifyButton" : "Log In Now" ,
+    "ForgotPassword" : "Forgot Password? " ,
+    "writeEmail" : "Please write your email.",
+    "passwordrestsent" : "Rest password link sent! Check your email.",
+    "endEmailAddress" : "The email must end with '@gmail.com'",
+    "morethanA8" : "Your password should be at least 8 characters long.",
+    "worngemailorpassword" : "Incorrect email or password. Please try again.",
+    "toomanyrequst" : "Too many login attempts. Please try again later.",
+
+    "Dark" : "Dark",
+    "Light" : "Light",
+
+
+
+    "years" : "Years exp",
+    "askDoctorAI" : "Ask Ai Doctor",
+
+    "imageCancel" : "Image selection canceled."
+
+
+
+}
