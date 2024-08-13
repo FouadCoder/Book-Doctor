@@ -11,8 +11,7 @@ import 'package:lottie/lottie.dart';
 
 class SignIn extends StatefulWidget {
 
-    const SignIn({super.key});
-
+  const SignIn({super.key});
   @override
   State<SignIn> createState() => _SignInState();
 }
@@ -56,34 +55,29 @@ void dipsoe(){
               const SizedBox(height: 20),
               // Email
               Text(S.of(context).Email , style: const TextStyle(color: blueMain , fontSize: 18 , fontWeight: FontWeight.bold),),
-              GeneralTextfromfiled(heightText: 60,controller: controllerEmail, color: Colors.blueGrey , maxLength: 250 ,textInputType: TextInputType.emailAddress, validator: (val){
-                if(val!.isEmpty){return S.of(context).Empty;}
-                if(!val.trim().endsWith("@gmail.com")){return S.of(context).endEmailAddress;}
-                return null;},),
+              GeneralTextfromfiled(heightText: 60,controller: controllerEmail, color: Colors.blueGrey , maxLength: 250 ,textInputType: TextInputType.emailAddress),
               // Password
               const SizedBox(height: 5),
               Text(S.of(context).Password, style: const TextStyle(color: blueMain , fontSize: 18 , fontWeight: FontWeight.bold),),
-              GeneralTextfromfiled(heightText: 60,controller: controllerPassword, color: Colors.blueGrey , maxLength: 60 ,textInputType: TextInputType.text, validator: (val){
-                if(val!.isEmpty){return S.of(context).Empty;}
-                if(val.length < 8){return S.of(context).morethanA8;}
-                return null;},), 
+              GeneralTextfromfiled(heightText: 60,controller: controllerPassword, color: Colors.blueGrey , maxLength: 60 ,textInputType: TextInputType.text,), 
               const SizedBox(height: 5),
               // Confirm Password
               Text(S.of(context).ConfirmPassword , style: const TextStyle(color: blueMain , fontSize: 18 , fontWeight: FontWeight.bold),),
-              GeneralTextfromfiled(heightText: 60,controller: controllerConfiromPassword, color: Colors.blueGrey ,maxLength: 60 ,textInputType: TextInputType.text,validator: (val){
-                if(val!.isEmpty){return S.of(context).Empty;}
-                if(val.length < 8){return S.of(context).morethanA8;}
-                if(controllerPassword.text != controllerConfiromPassword.text){return S.of(context).donTmatch;}
-                return null;},),
+              GeneralTextfromfiled(heightText: 60,controller: controllerConfiromPassword, color: Colors.blueGrey ,maxLength: 60 ,textInputType: TextInputType.text),
               const SizedBox(height: 10,),
             
               // Login 
               loadingSignup ?
               Center(child: Lottie.asset("assets/loding.blue.json" , height: 120 , width: 120)) : 
               ClassButton(textbutton: S.of(context).signup, color: blueMain, onPressed: () async {
-                if(globalKey.currentState!.validate()){
-                  // create account 
-                  try {
+
+
+
+                if(controllerEmail.text.isNotEmpty && controllerPassword.text.isNotEmpty && controllerConfiromPassword.text.isNotEmpty){
+                  if(controllerEmail.text.trim().endsWith("@gmail.com")){
+                    if(controllerPassword.text.length > 8){
+                      if(controllerPassword.text == controllerConfiromPassword.text){
+                        try {
                     setState(() {
                       loadingSignup = true;
                     });
@@ -108,8 +102,26 @@ void dipsoe(){
                       // ignore: use_build_context_synchronously
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).tryLater , style: const TextStyle(color: Colors.white),) , backgroundColor: Colors.red,));
                           } // END 
+                      }
+                      // if the password and confirm password didn't match 
+                      else{
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).donTmatch), backgroundColor: Colors.red));
+                      }
+                    }
+                    // if the password less than 8 
+                    else {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).morethanA8), backgroundColor: Colors.red));
+                    }
+                  } 
+                  // if the email didn't end with @gmail.com
+                  else{
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).endEmailAddress), backgroundColor: Colors.red));
+                  }
+                } 
+                // if empty
+                else {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).empty) , backgroundColor: Colors.red,));
                 }
-                
               }),
             
             

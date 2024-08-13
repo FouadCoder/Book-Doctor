@@ -197,8 +197,9 @@ class _MoreInfoDotorState extends State<MoreInfoDotor> {
                   builder: (context , snapshotDate){
                     if(snapshotDate.hasData){
                       final datedays = snapshotDate.data!.docs.first;
-                      
-                      Map<String , dynamic> availability = datedays["MonthTime"];
+                      // check if monthTime is exsit oe not 
+                      Map<String , dynamic> availability = datedays.data().containsKey("MonthTime") ?
+                      datedays["MonthTime"] : {};
                       List days = [];
     // current date
                       DateTime currnetDate = DateTime(DateTime.now().year , DateTime.now().month , DateTime.now().day);

@@ -24,7 +24,6 @@ class _LoginState extends State<Login> {
   final TextEditingController controllerEmail = TextEditingController();
 
   final TextEditingController controllerPassword = TextEditingController();
-  GlobalKey<FormState> globalKey = GlobalKey();
   bool loading = false;
   bool loadingLogin = false;
 
@@ -144,157 +143,163 @@ void verifayEmail(BuildContext context){
           horizontal: MediaQuery.of(context).size.width * 0.03,
         ),
         child:SingleChildScrollView(
-          child:Form(
-            key: globalKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          child:Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Name of APP
+              const SizedBox(height: 150),
+              const Center(child:Text("HealthHub" , style: TextStyle(fontSize: 27 , fontWeight: FontWeight.bold , color: blueMain),)),
+              const SizedBox(height: 80),
+            // Text Login in your account 
+            Text(S.of(context).LoginInYourAccount , style: const TextStyle(fontWeight: FontWeight.bold , fontSize: 20),),
+            const SizedBox(height: 20),
+            // Email
+            Text(S.of(context).Email , style: const TextStyle(color: blueMain , fontSize: 18 , fontWeight: FontWeight.bold),),
+            GeneralTextfromfiled(heightText: 60,controller: controllerEmail, color: Colors.blueGrey , maxLength: 250 ,textInputType: TextInputType.emailAddress),
+            // Password
+            const SizedBox(height: 5),
+            Text(S.of(context).Password, style: const TextStyle(color: blueMain , fontSize: 18 , fontWeight: FontWeight.bold),),
+            GeneralTextfromfiled(heightText: 60,controller: controllerPassword, color: Colors.blueGrey , maxLength: 60 ,textInputType: TextInputType.text), 
+            const SizedBox(height: 10,),
+            // Forget password
+            Row(
               children: [
-                // Name of APP
-                const SizedBox(height: 150),
-                const Center(child:Text("HealthHub" , style: TextStyle(fontSize: 27 , fontWeight: FontWeight.bold , color: blueMain),)),
-                const SizedBox(height: 80),
-              // Text Login in your account 
-              Text(S.of(context).LoginInYourAccount , style: const TextStyle(fontWeight: FontWeight.bold , fontSize: 20),),
-              const SizedBox(height: 20),
-              // Email
-              Text(S.of(context).Email , style: const TextStyle(color: blueMain , fontSize: 18 , fontWeight: FontWeight.bold),),
-              GeneralTextfromfiled(heightText: 60,controller: controllerEmail, color: Colors.blueGrey , maxLength: 250 ,textInputType: TextInputType.emailAddress,validator: (val){
-                if(val!.isEmpty){return S.of(context).Empty;}
-                if(!val.trim().endsWith("@gmail.com")){return S.of(context).endEmailAddress;}
-                return null;},),
-              // Password
-              const SizedBox(height: 5),
-              Text(S.of(context).Password, style: const TextStyle(color: blueMain , fontSize: 18 , fontWeight: FontWeight.bold),),
-              GeneralTextfromfiled(heightText: 60,controller: controllerPassword, color: Colors.blueGrey , maxLength: 60 ,textInputType: TextInputType.text,validator: (val){
-                if(val!.isEmpty){return S.of(context).Empty;}
-                return null;},), 
-              const SizedBox(height: 10,),
-              // Forget password
-              conter == 0 ?
-              Row(
-                children: [
-                  const Spacer(),
-                  GestureDetector(
-                    onTap: (){
-                      if(controllerEmail.text.isNotEmpty){
-                        if(controllerEmail.text.endsWith("@gmail.com")){
-                          _sendrestPassword(controllerEmail.text.trim()); // send rest password
-                        } else {
-                          // if the email write in bad way 
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).endEmailAddress , style: const TextStyle(color: Colors.white),) , backgroundColor: Colors.red,));
-                        }
-                      } else {
-                        // if user didn't write has email 
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).writeEmail , style: const TextStyle(color: Colors.white),) , backgroundColor: Colors.red,));
-                      }
-                    },
-                    child: Text(S.of(context).ForgotPassword , style: const TextStyle(fontWeight: FontWeight.bold , color: blueMain),textAlign: TextAlign.right,),
-                  ),
-                ],
-              ) : Row(children: [
                 const Spacer(),
-                // ignore: unnecessary_string_interpolations
-                Text("${getFormattedTime()}" , style: const TextStyle(fontSize: 18),),
-              ],),
-            const SizedBox(height: 5,),
-              // Login 
-              loadingLogin ? 
-              Center(child: Lottie.asset("assets/loding.blue.json" , height: 120 , width: 120)) :
-              ClassButton(textbutton: S.of(context).Login , color: blueMain, onPressed: () async{
-                // check that passwords and email not empty 
-            if(globalKey.currentState!.validate()){
-              try {
-                setState(() {loadingLogin = true;});
-              await FirebaseAuth.instance.signInWithEmailAndPassword(
-                email: controllerEmail.text.trim(),
-                password: controllerPassword.text.trim()
-              );
-              // here if login end successfully 
-              User? user = FirebaseAuth.instance.currentUser;
-              if(user != null && user.emailVerified){
-                // Main page 
-                setState(() {loadingLogin = false;}); // false
-                // ignore: use_build_context_synchronously
-                Navigator.of(context).pushNamedAndRemoveUntil("MainPage", (route)=> false);
-              } else {
-                setState(() {loadingLogin = false;}); // salse 
-                // ignore: use_build_context_synchronously
-                verifayEmail(context);
-              }
-              
-
-              // if there error 
-            } on FirebaseAuthException catch (e) {
-              setState(() {loadingLogin = false;});
-              // if email or password is worng
-              if(e.code == 'invalid-credential'){
-                // ignore: use_build_context_synchronously
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).worngemailorpassword , style: const TextStyle(color: Colors.white),) , backgroundColor: Colors.red,));
-                // too many requsets
-              } else if(e.code == 'too-many-requests'){
-                // ignore: use_build_context_synchronously
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).toomanyrequst , style: const TextStyle(color: Colors.white),) , backgroundColor: Colors.red,));
-                // any error else 
-              } else {
-                // ignore: use_build_context_synchronously
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).trylater , style: const TextStyle(color: Colors.white),) , backgroundColor: Colors.red,));
-              }
-              }
-            }
-              }),
-            
-            
-            
-              // Google
-              loading ? 
-              Center(child: Lottie.asset("assets/loding.blue.json" , height: 150 , width: 150)) :
-              ClassButton(textbutton: S.of(context).LoginGoogle, color: blueMain, onPressed: () async {
-                try{
-                // Loading here
-                setState(() {loading = true;});
-                QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection("Admin").get();
-              final adminEmail = querySnapshot.docs.first["email"];
-              // Sign in Auth
-                UserCredential? user = await AuthService().signInWithGoogle();
-                
-                // you make a check that user not null and not admin
-                      if(user != null){
-                        String? useremail =  FirebaseAuth.instance.currentUser!.email;
-                        if(useremail != adminEmail){
-                          // ignore: use_build_context_synchronously
-                          Navigator.of(context).pushNamedAndRemoveUntil("MainPage", (route)=> false);
-                        } else if(useremail == adminEmail){
-                          // ignore: use_build_context_synchronously
-                          Navigator.of(context).pushNamedAndRemoveUntil("Admin", (route)=> false);
-                        } 
-                        
-                      }  
-                      // stop loading
-                      setState(() {loading = false;});
-                }  catch(e){
-                setState(() {loading = false;});
-                // ignore: use_build_context_synchronously
-                ScaffoldMessenger.of(context).showSnackBar( SnackBar(content: 
-                // ignore: use_build_context_synchronously
-                Text(S.of(context).tryagain)));
-                // this will make the loading stop , no matter what is the state success or error
-              } finally { setState(() {loading = false;});}
-              }),
-            
-            
-              const SizedBox(height: 30),
-              // Text don't have an account Sign in
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(S.of(context).DontHvaeAccount),
-                  GestureDetector(onTap: (){
-                    Navigator.of(context).pushReplacementNamed("Sign");
-                  }, child: Text(S.of(context).signup , style: const TextStyle(color: blueMain , fontWeight: FontWeight.bold),))
-                ],
-              )
+                GestureDetector(
+                  onTap: (){
+                    if(controllerEmail.text.isNotEmpty){
+                      if(controllerEmail.text.trim().endsWith("@gmail.com")){
+                        _sendrestPassword(controllerEmail.text.trim()); // send rest password
+                      } else {
+                        // if the email write in bad way 
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).endEmailAddress , style: const TextStyle(color: Colors.white),) , backgroundColor: Colors.red,));
+                      }
+                    } else {
+                      // if user didn't write has email 
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).writeEmail , style: const TextStyle(color: Colors.white),) , backgroundColor: Colors.red,));
+                    }
+                  },
+                  child: conter == 0 ?
+                  Text(S.of(context).ForgotPassword , style: const TextStyle(fontWeight: FontWeight.bold , color: blueMain),textAlign: TextAlign.right,) :
+                  // ignore: unnecessary_string_interpolations
+                  Text("${getFormattedTime()}" , style: const TextStyle(fontSize: 18),),
+                ),
               ],
-            ),
+            ) ,
+          const SizedBox(height: 5,),
+          
+          
+          
+          
+            // Login 
+            loadingLogin ? 
+            Center(child: Lottie.asset("assets/loding.blue.json" , height: 120 , width: 120)) :
+            ClassButton(textbutton: S.of(context).Login , color: blueMain, onPressed: () async{
+          
+              // check that email and password not empty 
+              if(controllerEmail.text.isNotEmpty && controllerPassword.text.isNotEmpty){
+                // check that email end with @gmail.com 
+                if(controllerEmail.text.trim().endsWith("@gmail.com")){
+                  try {
+              setState(() {loadingLogin = true;});
+            await FirebaseAuth.instance.signInWithEmailAndPassword(
+              email: controllerEmail.text.trim(),
+              password: controllerPassword.text.trim()
+            );
+            // here if login end successfully 
+            User? user = FirebaseAuth.instance.currentUser;
+            if(user != null && user.emailVerified){
+              // Main page 
+              setState(() {loadingLogin = false;}); // false
+              // ignore: use_build_context_synchronously
+              Navigator.of(context).pushNamedAndRemoveUntil("MainPage", (route)=> false);
+            } else {
+              setState(() {loadingLogin = false;}); // salse 
+              // ignore: use_build_context_synchronously
+              verifayEmail(context);
+            }
+            
+          
+            // if there error 
+          } on FirebaseAuthException catch (e) {
+            setState(() {loadingLogin = false;});
+            // if email or password is worng
+            if(e.code == 'invalid-credential'){
+              // ignore: use_build_context_synchronously
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).worngemailorpassword , style: const TextStyle(color: Colors.white),) , backgroundColor: Colors.red,));
+              // too many requsets
+            } else if(e.code == 'too-many-requests'){
+              // ignore: use_build_context_synchronously
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).toomanyrequst , style: const TextStyle(color: Colors.white),) , backgroundColor: Colors.red,));
+              // any error else 
+            } else {
+              // ignore: use_build_context_synchronously
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).trylater , style: const TextStyle(color: Colors.white),) , backgroundColor: Colors.red,));
+            }
+            }
+                }
+                // if email didn't end with @gmail.com 
+                else {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).endEmailAddress), backgroundColor: Colors.red));
+                }
+              } 
+              // if empty 
+              else {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).Empty) , backgroundColor: Colors.red,));
+              }
+            }),
+          
+          
+          
+            // Google
+            loading ? 
+            Center(child: Lottie.asset("assets/loding.blue.json" , height: 150 , width: 150)) :
+            ClassButton(textbutton: S.of(context).LoginGoogle, color: blueMain, onPressed: () async {
+              try{
+              // Loading here
+              setState(() {loading = true;});
+              QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection("Admin").get();
+            final adminEmail = querySnapshot.docs.first["email"];
+            // Sign in Auth
+              UserCredential? user = await AuthService().signInWithGoogle();
+              
+              // you make a check that user not null and not admin
+                    if(user != null){
+                      String? useremail =  FirebaseAuth.instance.currentUser!.email;
+                      if(useremail != adminEmail){
+                        // ignore: use_build_context_synchronously
+                        Navigator.of(context).pushNamedAndRemoveUntil("MainPage", (route)=> false);
+                      } else if(useremail == adminEmail){
+                        // ignore: use_build_context_synchronously
+                        Navigator.of(context).pushNamedAndRemoveUntil("Admin", (route)=> false);
+                      } 
+                      
+                    }  
+                    // stop loading
+                    setState(() {loading = false;});
+              }  catch(e){
+              setState(() {loading = false;});
+              // ignore: use_build_context_synchronously
+              ScaffoldMessenger.of(context).showSnackBar( SnackBar(content: 
+              // ignore: use_build_context_synchronously
+              Text(S.of(context).tryagain)));
+              // this will make the loading stop , no matter what is the state success or error
+            } finally { setState(() {loading = false;});}
+            }),
+          
+          
+            const SizedBox(height: 30),
+            // Text don't have an account Sign in
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(S.of(context).DontHvaeAccount),
+                GestureDetector(onTap: (){
+                  Navigator.of(context).pushReplacementNamed("Sign");
+                }, child: Text(S.of(context).signup , style: const TextStyle(color: blueMain , fontWeight: FontWeight.bold),))
+              ],
+            )
+            ],
           ),
         ),
       ),

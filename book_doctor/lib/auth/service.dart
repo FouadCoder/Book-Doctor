@@ -52,9 +52,7 @@ class _CheckAcuuontAuthState extends State<CheckAcuuontAuth> {
             builder: (context , snapshot){
               if(snapshot.connectionState == ConnectionState.waiting){
                 return Center(child: Lottie.asset("assets/loding.blue.json" , height: 200 , width: 200));
-                // If user have date
-
-// Check if user admin or not 
+         // Check if user admin or not 
               } else if(snapshot.hasData){
               User? user = snapshot.data;
               String? userEmail = user?.email;
@@ -63,8 +61,12 @@ class _CheckAcuuontAuthState extends State<CheckAcuuontAuth> {
                 return StreamBuilder(
                   stream: FirebaseFirestore.instance.collection("Admin").snapshots(),
                   builder: (context , snapshotAdmin){
+                    // Loading 
+                    if(snapshotAdmin.connectionState == ConnectionState.waiting){
+                      return Center(child: Lottie.asset("assets/loding.blue.json" , height: 200 , width: 200));
+                    }
                     // check if there date 
-                    if(snapshotAdmin.hasData){
+                    else if(snapshotAdmin.hasData){
                       final date = snapshotAdmin.data!.docs.first;
                       String adminEmail = date["email"];
                       if( user.emailVerified && userEmail != adminEmail){
@@ -84,8 +86,6 @@ class _CheckAcuuontAuthState extends State<CheckAcuuontAuth> {
                 return const Login();
               }
             } 
-
-
             // here if user has no date 
             else{
               return const Login();

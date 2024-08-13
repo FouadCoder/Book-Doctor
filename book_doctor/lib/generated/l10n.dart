@@ -1300,10 +1300,10 @@ class S {
     );
   }
 
-  /// `This can't be empty`
+  /// `This field can't be empty. Please enter the required information`
   String get Empty {
     return Intl.message(
-      'This can\'t be empty',
+      'This field can\'t be empty. Please enter the required information',
       name: 'Empty',
       desc: '',
       args: [],
@@ -1635,6 +1635,36 @@ class S {
     return Intl.message(
       'Image selection canceled.',
       name: 'imageCancel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bio AR`
+  String get BioAR {
+    return Intl.message(
+      'Bio AR',
+      name: 'BioAR',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bio ES`
+  String get BioES {
+    return Intl.message(
+      'Bio ES',
+      name: 'BioES',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bio JA`
+  String get BioJA {
+    return Intl.message(
+      'Bio JA',
+      name: 'BioJA',
       desc: '',
       args: [],
     );

@@ -33,6 +33,7 @@ class _EditProfileState extends State<EditProfile> {
   final TextEditingController controllerCurrentMedical = TextEditingController();
 
   final TextEditingController controllerGender = TextEditingController();
+  bool loadingSave = false;
 
   @override
 void dispose() {
@@ -107,7 +108,6 @@ void sheetButtonPicture (BuildContext context){
   int? weightSeceltd;
   String? gender;
   bool selectGender = false;
-  final GlobalKey<FormState> _key = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -118,123 +118,128 @@ void sheetButtonPicture (BuildContext context){
             horizontal: MediaQuery.of(context).size.width * 0.05,
             vertical: MediaQuery.of(context).size.height * 0.05,
           ),
-          child: Form(
-            key: _key,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Image
-                Center(
-                  child: GestureDetector(
-                    onTap: (){ sheetButtonPicture(context);},
-                    child: Container(
-                      height: 100,
-                      width: 100,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle
-                      ),
-                      child:ClipOval(child:  image != null ? Image.file(File(image!.path) , fit: BoxFit.cover,) : Image.asset("assets/user.png" , fit: BoxFit.cover,),)
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Image
+              Center(
+                child: GestureDetector(
+                  onTap: (){ sheetButtonPicture(context);},
+                  child: Container(
+                    height: 100,
+                    width: 100,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle
                     ),
+                    child:ClipOval(child:  image != null ? Image.file(File(image!.path) , fit: BoxFit.cover,) : Image.asset("assets/user.png" , fit: BoxFit.cover,),)
                   ),
                 ),
-            
-            
-                const SizedBox(height: 30),
-                Text(S.of(context).Name , style: const TextStyle(fontWeight: FontWeight.bold , fontSize: 20 , color: blueMain),),
-                GeneralTextfromfiled(heightText: 60,controller: controllerName, color: Colors.blueGrey ,textInputType: TextInputType.name ,maxLength: 25, validator: (val){if(val!.isEmpty){return S.of(context).AddName;}return null;},),
-                Text(S.of(context).PhoneNumber , style: const TextStyle(fontWeight: FontWeight.bold , fontSize: 20 , color: blueMain),),
-                GeneralTextfromfiled(heightText: 60,controller: controllerPhone, color: Colors.blueGrey , maxLength: 25, textInputType: TextInputType.phone,),
-                Text(S.of(context).Address , style: const TextStyle(fontWeight: FontWeight.bold , fontSize: 20 , color: blueMain),),
-                GeneralTextfromfiled(heightText: 60,controller: controllerAddress, color: Colors.blueGrey , maxLength: 50, textInputType: TextInputType.streetAddress,validator: (val){if(val!.isEmpty){return S.of(context).AddAddress;}return null;},),
-                Text(S.of(context).MedicalHistory , style: const TextStyle(fontWeight: FontWeight.bold , fontSize: 20 , color: blueMain),),
-                GeneralTextfromfiled(heightText: 60,controller: controllerMedicalHostory, color: Colors.blueGrey , maxLength: 250, textInputType: TextInputType.text,),
-                Text(S.of(context).CurrentMedical , style: const TextStyle(fontWeight: FontWeight.bold , fontSize: 20 , color: blueMain),),
-                GeneralTextfromfiled(heightText: 60,controller: controllerCurrentMedical, color: Colors.blueGrey , maxLength: 250, textInputType: TextInputType.text,),
-                const SizedBox(height: 10),
-            
-            // For choose Gender
-                Column(
-                  children: [
-                    // Male
+              ),
+          
+          
+              const SizedBox(height: 30),
+              Text(S.of(context).Name , style: const TextStyle(fontWeight: FontWeight.bold , fontSize: 20 , color: blueMain),),
+              GeneralTextfromfiled(heightText: 60,controller: controllerName, color: Colors.blueGrey ,textInputType: TextInputType.name ,maxLength: 25,),
+              Text(S.of(context).PhoneNumber , style: const TextStyle(fontWeight: FontWeight.bold , fontSize: 20 , color: blueMain),),
+              GeneralTextfromfiled(heightText: 60,controller: controllerPhone, color: Colors.blueGrey , maxLength: 25, textInputType: TextInputType.phone,),
+              Text(S.of(context).Address , style: const TextStyle(fontWeight: FontWeight.bold , fontSize: 20 , color: blueMain),),
+              GeneralTextfromfiled(heightText: 60,controller: controllerAddress, color: Colors.blueGrey , maxLength: 50, textInputType: TextInputType.streetAddress),
+              Text(S.of(context).MedicalHistory , style: const TextStyle(fontWeight: FontWeight.bold , fontSize: 20 , color: blueMain),),
+              GeneralTextfromfiled(heightText: 60,controller: controllerMedicalHostory, color: Colors.blueGrey , maxLength: 250, textInputType: TextInputType.text,),
+              Text(S.of(context).CurrentMedical , style: const TextStyle(fontWeight: FontWeight.bold , fontSize: 20 , color: blueMain),),
+              GeneralTextfromfiled(heightText: 60,controller: controllerCurrentMedical, color: Colors.blueGrey , maxLength: 250, textInputType: TextInputType.text,),
+              const SizedBox(height: 10),
+          
+          // For choose Gender
+              Column(
+                children: [
+                  // Male
+                  RadioListTile(
+                    title: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(S.of(context).Male , style: const TextStyle(fontWeight: FontWeight.bold , fontSize: 20),),
+                        const SizedBox(width: 10),
+                        SizedBox(height: 25,width: 20, child: Image.asset("assets/male1.png"),)
+                      ],
+                    ),
+                    activeColor: blueMain,
+                    value: "Male", groupValue: gender, onChanged: (val){
+                    setState(() {
+                      gender = val;
+                      selectGender = true; // to make sure he choose Gender
+                    });
+                  }) ,
+                  // Female
                     RadioListTile(
-                      title: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text(S.of(context).Male , style: const TextStyle(fontWeight: FontWeight.bold , fontSize: 20),),
-                          const SizedBox(width: 10),
-                          SizedBox(height: 25,width: 20, child: Image.asset("assets/male1.png"),)
-                        ],
-                      ),
-                      activeColor: blueMain,
-                      value: "Male", groupValue: gender, onChanged: (val){
-                      setState(() {
-                        gender = val;
-                        selectGender = true; // to make sure he choose Gender
-                      });
-                    }) ,
-                    // Female
-                      RadioListTile(
-                      title: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Text(S.of(context).Female , style: const TextStyle(fontWeight: FontWeight.bold , fontSize: 20),),
-                          const SizedBox(width: 10),
-                          SizedBox(height: 25,width: 20, child: Image.asset("assets/female.png"),)
-                        ],
-                      ),
-                      
-                      activeColor: blueMain,
-                      value: "Female", groupValue: gender, onChanged: (val){
-                      setState(() {
-                        gender = val;
-                        selectGender = true;  // to make sure he choose Gender
-                      });
-                    })
-                  ],
-                ),
-            
-                    BlocListener<UpdateProfileCubit,UpdateProfileState>(
-                      listener: (context , state) {
-                        // Loading
-                          if (state is UpdateProfileLoading){
-                          showDialog(context: context, builder: (BuildContext context){
-                            return  Center(child: Lottie.asset("assets/loding.blue.json" , height: 200 , width: 200));
-                          });
-                        }
-                        // if the update end successfully
-                        else if(state is UpdateProfileLoaded){
-                          showDialog( barrierDismissible:  false,context: context, builder: (BuildContext context){
-                            return ShowdialogSuccess(message: S.of(context).MessageSuccess, onPressed: (){Navigator.of(context).pushNamedAndRemoveUntil("MainPage" , (route)=> false);}, stateImage: "assets/true.blue.png", mainText: S.of(context).Success, buttomText: S.of(context).GoBack);
-                          });
-                        }
-                        // if something goes wrong 
-                        else if (state is UpdateProfileError){
-                          showDialog( barrierDismissible: false,context: context, builder: (BuildContext context){
-                            return ShowdialogSuccess(message: S.of(context).MessageWrong, onPressed: (){Navigator.of(context).pushNamedAndRemoveUntil("MainPage" , (route)=> false);}, stateImage: "assets/cry.png", mainText: S.of(context).Failed, buttomText: S.of(context).GoBack);
-                          });
-                        }
-                      }, child: ClassButton(textbutton: S.of(context).Save, color: blueMain, onPressed: (){
-                        if(selectGender == true){
-                        if(_key.currentState!.validate()){
-                        String name = controllerName.text;
-                        if(controllerPhone.text.isEmpty){controllerPhone.text = "";}
-                        String phoneNumber = controllerPhone.text;
-                        String address = controllerAddress.text;
-                        if(controllerMedicalHostory.text.isEmpty){controllerMedicalHostory.text = "";}
-                        if(controllerCurrentMedical.text.isEmpty){controllerCurrentMedical.text = "";}
-                        String medicalHistory = controllerMedicalHostory.text;
-                        String currentMedical = controllerCurrentMedical.text;
-                        String gender1 = gender!; 
-                        context.read<UpdateProfileCubit>().updateProfile(name, phoneNumber, address, medicalHistory, currentMedical, gender1,image);
-                        }
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).SelecGender ) , backgroundColor: blueMain,));
-                        }
-                      }),
-                    )
-                  ],
-                )
-                ),
+                    title: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(S.of(context).Female , style: const TextStyle(fontWeight: FontWeight.bold , fontSize: 20),),
+                        const SizedBox(width: 10),
+                        SizedBox(height: 25,width: 20, child: Image.asset("assets/female.png"),)
+                      ],
+                    ),
+                    
+                    activeColor: blueMain,
+                    value: "Female", groupValue: gender, onChanged: (val){
+                    setState(() {
+                      gender = val;
+                      selectGender = true;  // to make sure he choose Gender
+                    });
+                  })
+                ],
+              ),
+          
+                  BlocListener<UpdateProfileCubit,UpdateProfileState>(
+                    listener: (context , state) {
+                      // Loading
+                        if (state is UpdateProfileLoading){setState(() {loadingSave = true ;});}
+                      // if the update end successfully
+                      else if(state is UpdateProfileLoaded){
+                        setState(() {loadingSave = false;});
+                        showDialog( barrierDismissible:  false,context: context, builder: (BuildContext context){
+                          return ShowdialogSuccess(message: S.of(context).MessageSuccess, onPressed: (){Navigator.of(context).pushNamedAndRemoveUntil("MainPage" , (route)=> false);}, stateImage: "assets/true.blue.png", mainText: S.of(context).Success, buttomText: S.of(context).GoBack);
+                        });
+                      }
+                      // if something goes wrong 
+                      else if (state is UpdateProfileError){
+                        setState(() {loadingSave = false;});
+                        showDialog( barrierDismissible: false,context: context, builder: (BuildContext context){
+                          return ShowdialogSuccess(message: S.of(context).MessageWrong, onPressed: (){Navigator.of(context).pushNamedAndRemoveUntil("MainPage" , (route)=> false);}, stateImage: "assets/cry.png", mainText: S.of(context).Failed, buttomText: S.of(context).GoBack);
+                        });
+                      }
+                    }, child: 
+                    loadingSave ? 
+                    Center(child: Lottie.asset("assets/loding.blue.json" , height: 150 , width: 150)) :
+                    ClassButton(textbutton: S.of(context).Save, color: blueMain, onPressed: (){
+                      if(selectGender == true){
+                        if(controllerName.text.isNotEmpty){
+                          if(controllerAddress.text.isNotEmpty){
+                            String name = controllerName.text;
+                      if(controllerPhone.text.isEmpty){controllerPhone.text = "";}
+                      String phoneNumber = controllerPhone.text;
+                      String address = controllerAddress.text;
+                      if(controllerMedicalHostory.text.isEmpty){controllerMedicalHostory.text = "";}
+                      if(controllerCurrentMedical.text.isEmpty){controllerCurrentMedical.text = "";}
+                      String medicalHistory = controllerMedicalHostory.text;
+                      String currentMedical = controllerCurrentMedical.text;
+                      String gender1 = gender!; 
+                      context.read<UpdateProfileCubit>().updateProfile(name, phoneNumber, address, medicalHistory, currentMedical, gender1,image);
+                          } 
+                          // if address is empty 
+                          else {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).Address), backgroundColor: Colors.red));
+                          }
+                        } // if name empty 
+                        else {ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).AddName), backgroundColor: Colors.red));}
+                      }
+                      // select gender 
+                      else {ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).SelecGender ) , backgroundColor: blueMain,));}
+                    }),
+                  )
+                ],
+              ),
           ),
         ),
       );

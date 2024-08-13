@@ -59,6 +59,12 @@ class CreateAnewDcotorCubit extends Cubit<CreateAnewDcotorState>{
     String bio,
     String price,
     String category,
+    String bioAR,
+    String bioES,
+    String bioJA,
+    String medicalAR,
+    String medicalES,
+    String medicalJA,
     String rating,
     String expYears,
     File? image
@@ -80,10 +86,16 @@ class CreateAnewDcotorCubit extends Cubit<CreateAnewDcotorState>{
       "price" : price,
       "exp" : expYears,
       "Bio" : bio,
+      "BioES" : bioES,
+      "BioAR" : bioAR,
+      "BioJA" : bioJA,
       "rating" : rating,
       "Medical" : category,
+      "MedicalAR" : medicalAR,
+      "MedicalES" : medicalES,
+      "MedicalJA" : medicalJA,
       "id" : uniqueId,
-      "Image" : imageURL
+      "Image" : imageURL,
     });
     emit(CreateAnewLoaded());
     }

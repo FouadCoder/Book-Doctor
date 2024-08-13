@@ -152,7 +152,7 @@
 
     "PaymentAlways" : "Use Visa as Default",
     "titlePayment" : "Make Visa your default payment method for faster checkouts." ,
-    "Empty" : "This can't be empty",
+    "Empty" : "This field can't be empty. Please enter the required information",
     "donTmatch" : "Passwords don't match.",
     "weakpassword" : "Password is too weak. Please choose a stronger one." ,
     "emailexait" : "Email already in use. Please try another one." ,
@@ -190,7 +190,10 @@
     "years" : "Years exp",
     "askDoctorAI" : "Ask Ai Doctor",
 
-    "imageCancel" : "Image selection canceled."
+    "imageCancel" : "Image selection canceled.",
+    "BioAR" : "Bio AR",
+    "BioES" : "Bio ES",
+    "BioJA" : "Bio JA"
 
 
 

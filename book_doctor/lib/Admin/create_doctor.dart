@@ -22,6 +22,9 @@ class CreateDoctor extends StatefulWidget {
 class _CreateDoctorState extends State<CreateDoctor> {
   TextEditingController controllerName = TextEditingController();
   TextEditingController controllerBio = TextEditingController();
+  TextEditingController controllerBioAR = TextEditingController();
+  TextEditingController controllerBioES = TextEditingController();
+  TextEditingController controllerBioJA = TextEditingController();
   TextEditingController controllerPrice = TextEditingController();
   GlobalKey<FormState> globalKey = GlobalKey();
 
@@ -35,6 +38,9 @@ class _CreateDoctorState extends State<CreateDoctor> {
     controllerName.dispose();
     controllerBio.dispose();
     controllerPrice.dispose();
+    controllerBioAR.dispose();
+    controllerBioJA.dispose();
+    controllerBioES.dispose();
     super.dispose();
   }
 
@@ -215,9 +221,6 @@ class _CreateDoctorState extends State<CreateDoctor> {
                     if (val!.isEmpty) {
                       return S.of(context).empty;
                     }
-                    if (val.length < 5) {
-                      return S.of(context).shortName;
-                    }
                     return null;
                   },
                 ),
@@ -239,12 +242,104 @@ class _CreateDoctorState extends State<CreateDoctor> {
                     if (val!.isEmpty) {
                       return S.of(context).empty;
                     }
-                    if (val.length < 170) {
+                    if (val.length < 130) {
                       return S.of(context).shortBio;
                     }
                     return null;
                   },
                 ),
+                const SizedBox(height: 10),
+
+
+
+                // AR BIO 
+                Text(
+                  S.of(context).BioAR,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      color: blueMain),
+                ),
+                GeneralTextfromfiled(
+                  heightText: 125,
+                  controller: controllerBioAR,
+                  color: Colors.blueGrey,
+                  maxLength: 250,
+                  textInputType: TextInputType.text,
+                  validator: (val) {
+                    if (val!.isEmpty) {
+                      return S.of(context).empty;
+                    }
+                    if (val.length < 130) {
+                      return S.of(context).shortBio;
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 10),
+
+
+
+
+                // ES BIO 
+                Text(
+                  S.of(context).BioES,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      color: blueMain),
+                ),
+                GeneralTextfromfiled(
+                  heightText: 125,
+                  controller: controllerBioES,
+                  color: Colors.blueGrey,
+                  maxLength: 250,
+                  textInputType: TextInputType.text,
+                  validator: (val) {
+                    if(val!.isEmpty) {
+                      return S.of(context).empty;
+                    }
+                    if(val.length < 130) {
+                      return S.of(context).shortBio;
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 10),
+
+
+
+
+
+                // JA BIO 
+                Text(
+                  S.of(context).BioJA,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      color: blueMain),
+                ),
+                GeneralTextfromfiled(
+                  heightText: 125,
+                  controller: controllerBioJA,
+                  color: Colors.blueGrey,
+                  maxLength: 250,
+                  textInputType: TextInputType.text,
+                  validator: (val) {
+                    if (val!.isEmpty) {
+                      return S.of(context).empty;
+                    }
+                    if(val.length < 130) {
+                      return S.of(context).shortBio;
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 10),
+
+
+
+
                 // price
                 Text(
                   S.of(context).price,
@@ -373,16 +468,68 @@ class _CreateDoctorState extends State<CreateDoctor> {
                             // at this point , you already checked everything
                             // SAVE THE DATE
                             else {
+                              String medicalAR = "";
+                              String medicalES = "";
+                              String medicalJA = "";
+                              // give a value 
+                              switch (titleSP) {
+  case "Psychologist":
+    medicalAR = "الأخصائي النفسي";
+    medicalES = "Psicólogo";
+    medicalJA = "心理学者";
+    break;
+  case "Orthopedist":
+    medicalAR = "أخصائي العظام";
+    medicalES = "Ortopedista";
+    medicalJA = "整形外科医";
+    break;
+  case "Physical therapy":
+  medicalAR = "العلاج الطبيعي";
+  medicalES = "Fisioterapia";
+  medicalJA = "理学療法";
+    break;
+  case "Dermatologist":
+  medicalAR = "أخصائي الجلدية";
+  medicalES = "Dermatólogo";
+  medicalJA = "皮膚科医";
+    break;
+  case "Pediatrician":
+  medicalAR = "طبيب الأطفال";
+  medicalES = "Pediatra";
+  medicalJA =  "小児科医";
+    break;
+  case "Neurologist":
+  medicalAR = "أخصائي الأعصاب";
+  medicalES = "Neurólogo";
+  medicalJA = "神経科医";
+    break;
+  case "Cardiologist":
+  medicalAR = "أخصائي القلب";
+  medicalES = "Cardiólogo";
+  medicalJA = "心臓病専門医";
+    break;
+  default:
+  medicalAR = "";
+  medicalES = "";
+  medicalJA = "";
+    break;
+}
+
+
+
+
                               String name = controllerName.text;
                               String bio = controllerBio.text;
+                              String bioAR = controllerBioAR.text;
+                              String bioES = controllerBioES.text;
+                              String bioJA = controllerBioJA.text;
                               String price = controllerPrice.text;
                               String category = titleSP;
                               String rating = ratDoctor;
                               String expYears = yeartsEXP;
                               context
-                                  .read<CreateAnewDcotorCubit>()
-                                  .createDoctor(name, bio, price, category,
-                                      rating, expYears, image);
+                                  .read<CreateAnewDcotorCubit>().
+                                  createDoctor(name, bio, price, category, bioAR, bioES, bioJA, medicalAR, medicalES, medicalJA, rating, expYears, image);
                             }
                           }
                         });

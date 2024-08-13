@@ -34,6 +34,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "Available": MessageLookupByLibrary.simpleMessage("Available"),
         "AvailableTime": MessageLookupByLibrary.simpleMessage("Available time"),
         "Bio": MessageLookupByLibrary.simpleMessage("Bio"),
+        "BioAR": MessageLookupByLibrary.simpleMessage("Bio AR"),
+        "BioES": MessageLookupByLibrary.simpleMessage("Bio ES"),
+        "BioJA": MessageLookupByLibrary.simpleMessage("Bio JA"),
         "Book": MessageLookupByLibrary.simpleMessage("Book Appointment"),
         "Books": MessageLookupByLibrary.simpleMessage("Total appointments"),
         "BooksInProgress":
@@ -67,7 +70,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Don\'t have an account? "),
         "EXP": MessageLookupByLibrary.simpleMessage("Years of Experience"),
         "Email": MessageLookupByLibrary.simpleMessage("Email"),
-        "Empty": MessageLookupByLibrary.simpleMessage("This can\'t be empty"),
+        "Empty": MessageLookupByLibrary.simpleMessage(
+            "This field can\'t be empty. Please enter the required information"),
         "EmptyFavoriteList": MessageLookupByLibrary.simpleMessage(
             "Your favorite doctors list is waiting for your personal touch. Add your favorites to keep them close!"),
         "EmptyMessage": MessageLookupByLibrary.simpleMessage(

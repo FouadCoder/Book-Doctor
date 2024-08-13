@@ -25,9 +25,6 @@ class _VerifyEmailState extends State<VerifyEmail> {
   void initState(){
   super.initState();
   getLastrequest();
-  if(_requstConut == 0){
-    FirebaseAuth.instance.currentUser!.sendEmailVerification(); // send verify 
-  } 
 }
 
 void successVerifyGoLogin(BuildContext context){
@@ -53,7 +50,10 @@ void successVerifyGoLogin(BuildContext context){
       _lastrequest = lastrequest;
       _requstConut = requstConut;
     });
-
+    // it will work if request count == 0 
+    if(_requstConut == 0){
+      await FirebaseAuth.instance.currentUser!.sendEmailVerification(); // send verify 
+    }
     startTimer();
   }
 
@@ -91,9 +91,16 @@ void successVerifyGoLogin(BuildContext context){
       // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).emailsent) , backgroundColor: Colors.green,));
           }
-          catch(e){
-            // ignore: use_build_context_synchronously
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).tryLater) , backgroundColor: Colors.red,));
+          on FirebaseAuthException catch(e){
+            if(e.code == 'too-many-requests'){
+              // ignore: use_build_context_synchronously
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).toomanyrequst) , backgroundColor: Colors.red,));
+            } else {
+              // ignore: use_build_context_synchronously
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).tryLater) , backgroundColor: Colors.red,));
+            }
+            
+            
           }
   }
   
