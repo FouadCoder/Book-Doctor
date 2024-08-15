@@ -33,7 +33,7 @@ class ItemSchedule extends StatelessWidget {
             ) ,
           ]
               ),
-              height: isUpcomingTrue ? 220 : 160, // when it's not upcoming , there no button to cancel so we don't need all this height
+              height: isUpcomingTrue ? 230 : 160, // when it's not upcoming , there no button to cancel so we don't need all this height
               child: Column(
                 children: [
                   // ListTile Photo and name 

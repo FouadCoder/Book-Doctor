@@ -13,16 +13,17 @@ class DaysBook extends StatefulWidget {
 
   @override
   State<DaysBook> createState() => _DaysBookState();
-}
+} 
 
 class _DaysBookState extends State<DaysBook> {
-    late HourAvailableCubit _hourAvailableCubit;
+  late HourAvailableCubit _hourAvailableCubit;
 
-  @override
-  void initState(){
-    _hourAvailableCubit = context.read<HourAvailableCubit>();
+@override
+  void initState() {
+    _hourAvailableCubit= context.read<HourAvailableCubit>();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -30,7 +31,7 @@ class _DaysBookState extends State<DaysBook> {
         setState(() {
           widget.onItemSelect(widget.index , widget.days); // To know the day when user book 
         });
-        _hourAvailableCubit.workStream(widget.idDoctor, widget.keyDay,);
+        context.read<HourAvailableCubit>().workStream(widget.idDoctor, widget.keyDay,);
       },
       child: Container(
             margin: const EdgeInsets.all(10),

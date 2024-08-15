@@ -256,7 +256,7 @@ class _MoreInfoDotorState extends State<MoreInfoDotor> {
                           
 
                           
-                 // Text Available Time
+                 // Text Available 
                   const SizedBox(height: 20),
                   Text(S.of(context).AvailableTime , style: const TextStyle(fontSize: 20 , fontWeight: FontWeight.bold , color: blueMain),) ,
                   const SizedBox(height: 10),
@@ -266,7 +266,6 @@ class _MoreInfoDotorState extends State<MoreInfoDotor> {
                       // Loading
                       if(stateHour is HourAvailableLoaded){
                         final hoursList = stateHour.hours;
-
                         return SizedBox(height: 100, child:
                         ListView.builder(
                           scrollDirection: Axis.horizontal,

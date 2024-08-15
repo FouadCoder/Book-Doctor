@@ -273,6 +273,10 @@ class HourAvailableCubit extends Cubit<HourAvailableState>{
   StreamSubscription? subscription;
 // function to make the stream work 
 void workStream(String idDoctor , String keyDay){
+  if(subscription != null){
+    subscription!.cancel();
+    subscription = null;
+  }
     Stream mystream = FirebaseFirestore.instance.collection("Doctors").where("id" , isEqualTo: idDoctor).limit(1).snapshots();
     
         
@@ -297,8 +301,9 @@ List<String> hours = [];
 }
 // stop stream 
 void stopStream(){
-  subscription?.cancel();
-  emit(HourAvailableStop());
+  if(subscription != null){
+      subscription!.cancel();
+  emit(HourAvailableStop()); }
 }
 
 }
