@@ -53,11 +53,14 @@ if(imagePicker != null){
   setState(() {
     image = File(imagePicker.path);
   });
-  // ignore: use_build_context_synchronously
-  Navigator.of(context).pop();
+  if(mounted){
+    Navigator.of(context).pop();
+  }
+  
 } else {
-  // ignore: use_build_context_synchronously
-  ScaffoldMessenger.of(context).showSnackBar( SnackBar(content: Text(S.of(context).imageCancel)));
+  if(mounted){
+    ScaffoldMessenger.of(context).showSnackBar( SnackBar(content: Text(S.of(context).imageCancel)));
+  }
 } }
 // Get Image from Camara 
 void getImageCamare() async{
@@ -66,11 +69,15 @@ if(imagePicker != null){
   setState(() {
     image = File(imagePicker.path);
   });
-  // ignore: use_build_context_synchronously
-  Navigator.of(context).pop();
+  if(mounted){
+    Navigator.of(context).pop();
+  }
+  
 } else {
-  // ignore: use_build_context_synchronously
-  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).imageCancel)));
+  if(mounted){
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).imageCancel)));
+  }
+  
 }
 
 }

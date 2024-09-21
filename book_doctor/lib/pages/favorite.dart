@@ -32,7 +32,7 @@ class _FavoriteState extends State<Favorite> {
             //  LOADING
           if(state is FavoriteDoctorsLoading){
             return Center(child: Lottie.asset("assets/loding.blue.json" , height: 200 , width: 200));
-            // ERROR
+            // If there ERROR
           } else if (state is FavoriteDoctorsError){
             return Center(child: SizedBox(height: 150,width: MediaQuery.of(context).size.width, child: Column(
                       children: [Image.asset("assets/cry.png" ,height: 80,width: 80,),const SizedBox(height: 20,),Text(S.of(context).ErrorProfile) ],),),);

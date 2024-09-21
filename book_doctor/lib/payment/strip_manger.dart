@@ -7,9 +7,8 @@ abstract class PaymentManger{
   // class to make a payment 
   static Future<bool> makePayment(int amount , String moneyCode) async {
     try{
-      // ignore: non_constant_identifier_names
-      String client_secret = await _getSecretPayment((amount*100).toString(), moneyCode);
-      await _initialPayment(client_secret);
+      String clientSecret = await _getSecretPayment((amount*100).toString(), moneyCode);
+      await _initialPayment(clientSecret);
       await Stripe.instance.presentPaymentSheet();
       return true;
     }

@@ -56,8 +56,10 @@ class _ItemHomeState extends State<ItemHome> with SingleTickerProviderStateMixin
       }
     }
     catch(e){
-      // ignore: use_build_context_synchronously
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).tryLater , style:  const TextStyle(color: Colors.white), overflow: TextOverflow.ellipsis,) , backgroundColor: Colors.red,));
+      if(mounted){
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).tryLater , style:  const TextStyle(color: Colors.white), overflow: TextOverflow.ellipsis,) , backgroundColor: Colors.red,));
+      }
+      
     }
   }
   @override

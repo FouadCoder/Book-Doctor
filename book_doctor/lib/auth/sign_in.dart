@@ -87,20 +87,16 @@ void dipsoe(){
                       );
                       // Go to verify email page first 
                       setState(() {loadingSignup = false;});
-                      // ignore: use_build_context_synchronously
-                      Navigator.of(context).pushNamed("VerifyEmail");
+                      if(context.mounted){Navigator.of(context).pushNamed("VerifyEmail");}
                   } on FirebaseAuthException catch (e) {
                     setState(() {loadingSignup = false;});
                     if (e.code == 'weak-password') {
-                      // ignore: use_build_context_synchronously
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).weakpassword , style: const TextStyle(color: Colors.white),) , backgroundColor: Colors.red,));
+                      if(context.mounted){ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).weakpassword , style: const TextStyle(color: Colors.white),) , backgroundColor: Colors.red,));}
                     } else if (e.code == 'email-already-in-use') {
-                        // ignore: use_build_context_synchronously
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).emailexait , style: const TextStyle(color: Colors.white),) , backgroundColor: Colors.red,));
+                        if(context.mounted){ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).emailexait , style: const TextStyle(color: Colors.white),) , backgroundColor: Colors.red,));}
                           }
                   } catch (e) {
-                      // ignore: use_build_context_synchronously
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).tryLater , style: const TextStyle(color: Colors.white),) , backgroundColor: Colors.red,));
+                      if(context.mounted){ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).tryLater , style: const TextStyle(color: Colors.white),) , backgroundColor: Colors.red,));}
                           } // END 
                       }
                       // if the password and confirm password didn't match 
@@ -144,21 +140,16 @@ void dipsoe(){
                       if(user != null){
                         String? useremail =  FirebaseAuth.instance.currentUser!.email;
                         if(useremail != adminEmail){
-                          // ignore: use_build_context_synchronously
-                          Navigator.of(context).pushNamedAndRemoveUntil("MainPage", (route)=> false);
+                          if(context.mounted){Navigator.of(context).pushNamedAndRemoveUntil("MainPage", (route)=> false);}
                         } else if(useremail == adminEmail){
-                          // ignore: use_build_context_synchronously
-                          Navigator.of(context).pushNamedAndRemoveUntil("Admin", (route)=> false);
+                          if(context.mounted){Navigator.of(context).pushNamedAndRemoveUntil("Admin", (route)=> false);}
                         } 
                         
                       } 
                       setState(() {loading = false;});
                 }catch(e){
                 setState(() {loading = false;});
-                // ignore: use_build_context_synchronously
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: 
-                // ignore: use_build_context_synchronously
-                Text(S.of(context).tryagain , style: const TextStyle(color: Colors.white),)));
+                if(context.mounted){ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).tryagain , style: const TextStyle(color: Colors.white),)));}
                 // this will make the loading stop , no matter what is the state success or error
               } finally { setState(() {loading = false;});}
               }),

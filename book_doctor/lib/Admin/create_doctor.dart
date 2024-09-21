@@ -52,12 +52,9 @@ class _CreateDoctorState extends State<CreateDoctor> {
       setState(() {
         image = File(imagePicker.path);
       });
-      // ignore: use_build_context_synchronously
-      Navigator.of(context).pop();
+      if(mounted){Navigator.of(context).pop();}
     } else {
-      // ignore: use_build_context_synchronously
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text("Image selection canceled.")));
+      if(mounted){ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Image selection canceled.")));}
     }
   }
 
@@ -69,12 +66,9 @@ class _CreateDoctorState extends State<CreateDoctor> {
       setState(() {
         image = File(imagePicker.path);
       });
-      // ignore: use_build_context_synchronously
-      Navigator.of(context).pop();
+      if(mounted){Navigator.of(context).pop();}
     } else {
-      // ignore: use_build_context_synchronously
-      ScaffoldMessenger.of(context)
-          .showSnackBar( const SnackBar(content: Text("Image selection canceled.")));
+      if(mounted){ScaffoldMessenger.of(context).showSnackBar( const SnackBar(content: Text("Image selection canceled.")));}
     }
   }
 
@@ -466,7 +460,7 @@ class _CreateDoctorState extends State<CreateDoctor> {
                                       content: Text(S.of(context).didnTimage)));
                             }
                             // at this point , you already checked everything
-                            // SAVE THE DATE
+                            // ! SAVE THE DATE
                             else {
                               String medicalAR = "";
                               String medicalES = "";

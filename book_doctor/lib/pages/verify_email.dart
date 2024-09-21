@@ -20,6 +20,7 @@ class _VerifyEmailState extends State<VerifyEmail> {
   int ? _requstConut; // how many times user asked verify
   int  conter = 0; // sec
   Timer? _timer;
+  bool loadingSendVerify = false; // For loading when user ask verify email
 
 @override
   void initState(){
@@ -86,18 +87,19 @@ void successVerifyGoLogin(BuildContext context){
   Future<void> _sendverifyEmail() async {
           // send verify 
           try{
+            setState(() {loadingSendVerify = true;});
       await FirebaseAuth.instance.currentUser!.sendEmailVerification(); // send verify 
+      setState(() {loadingSendVerify = false;});
       await upddatLastrequst(); // to update last date 
-      // ignore: use_build_context_synchronously
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).emailsent) , backgroundColor: Colors.green,));
+      if(mounted){ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).emailsent) , backgroundColor: Colors.green,));}
           }
           on FirebaseAuthException catch(e){
+            // Stop loading
+            setState(() {loadingSendVerify = false;});
             if(e.code == 'too-many-requests'){
-              // ignore: use_build_context_synchronously
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).toomanyrequst) , backgroundColor: Colors.red,));
+              if(mounted){ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).toomanyrequst) , backgroundColor: Colors.red,));}
             } else {
-              // ignore: use_build_context_synchronously
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).tryLater) , backgroundColor: Colors.red,));
+              if(mounted){ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).tryLater) , backgroundColor: Colors.red,));}
             }
             
             
@@ -113,13 +115,16 @@ void successVerifyGoLogin(BuildContext context){
         conter = rmingTime;
       });
     _timer = Timer.periodic(const Duration(seconds: 1), (timer){
-      setState(() {
+      if(mounted){
+        setState(() {
         if(conter <= 0){
           _timer!.cancel();
         } else {
           conter--;
         }
       });
+      }
+      
     });
   }
 
@@ -161,15 +166,18 @@ void successVerifyGoLogin(BuildContext context){
                   user = FirebaseAuth.instance.currentUser;
                   if( user != null && user.emailVerified){
                     // take the user to Home Page 
-                    // ignore: use_build_context_synchronously
-                    successVerifyGoLogin(context);
+                    if(context.mounted){
+                      successVerifyGoLogin(context);
+                    }
+                    
                   } else {
                     // if user has not verifay has email 
-                    // ignore: use_build_context_synchronously
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).NotVerify , style: const TextStyle(color: Colors.white),) , backgroundColor: Colors.red,));
+                    if(context.mounted){ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).NotVerify , style: const TextStyle(color: Colors.white),) , backgroundColor: Colors.red,));}
                   }
                 })),
                 // send verify again 
+                loadingSendVerify ?
+                const Center(child: CircularProgressIndicator(color: blueMain)) :
                 conter == 0 ?
                 GestureDetector(
                   onTap: () async {
@@ -188,7 +196,10 @@ void successVerifyGoLogin(BuildContext context){
   @override
   void dispose(){
     if(_timer != null){
-      _timer!.cancel();
+      if(mounted){
+        _timer!.cancel();
+      }
+      
     }
     super.dispose();
   }

@@ -355,8 +355,8 @@ class _MoreInfoDotorState extends State<MoreInfoDotor> {
                                                 // check if it success or not 
                                                 if(result){
                                             // book a date and send the date to server 
-                                            // ignore: use_build_context_synchronously
-                                            context.read<BookDoctorCubit>().bookDateDoctor(
+                                            if(context.mounted){
+                                              context.read<BookDoctorCubit>().bookDateDoctor(
                                               name,
                                               address, 
                                               gender, 
@@ -373,16 +373,19 @@ class _MoreInfoDotorState extends State<MoreInfoDotor> {
                                               daybookUser!, 
                                               hourbookUser!, 
                                               image, payment);
+                                            }
                                             // if there error in Visa 
                                                 } else{
-                                                  // ignore: use_build_context_synchronously
-                                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).ErrorBook)));
+                                                  if(context.mounted){
+                                                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).ErrorBook)));
+                                                  }
+                                                  
                                                 }
                                                 // using Cash 
                                               } else {
                                                // book a date and send the date to server 
-                                            // ignore: use_build_context_synchronously
-                                            context.read<BookDoctorCubit>().bookDateDoctor(
+                                            if(context.mounted){
+                                              context.read<BookDoctorCubit>().bookDateDoctor(
                                               name,
                                               address, 
                                               gender, 
@@ -399,6 +402,7 @@ class _MoreInfoDotorState extends State<MoreInfoDotor> {
                                               daybookUser!, 
                                               hourbookUser!, 
                                               image, payment);
+                                            }
                                               }
                   
                   
@@ -419,15 +423,18 @@ class _MoreInfoDotorState extends State<MoreInfoDotor> {
                                             
                                               // if he didn't choose the day and hour , this message will appear 
                                             } else{
-                                              // ignore: use_build_context_synchronously
-                                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).ChooseDate)));
+                                              if(context.mounted){
+                                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).ChooseDate)));
+                                              }
+                                              
                                             }
                                           }
                                         } 
                                         catch(e){
                                           // if there error while booking a date 
-                                          // ignore: use_build_context_synchronously
-                                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).ErrorBook)));
+                                          if(context.mounted){
+                                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).ErrorBook)));
+                                          }
                                         }
                                       });
                       }

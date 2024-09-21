@@ -165,8 +165,10 @@ class _ProfileState extends State<Profile> {
                 GoogleSignIn googleSignIn = GoogleSignIn();
                 googleSignIn.disconnect();
                 await FirebaseAuth.instance.signOut();
-                // ignore: use_build_context_synchronously
-                Navigator.of(context).pushNamedAndRemoveUntil("Login", (route)=> false);
+                if(context.mounted){
+                  Navigator.of(context).pushNamedAndRemoveUntil("Login", (route)=> false);
+                }
+                
               }),
             ],
           ),

@@ -26,6 +26,7 @@ class _LoginState extends State<Login> {
   final TextEditingController controllerPassword = TextEditingController();
   bool loading = false;
   bool loadingLogin = false;
+  bool loadingForgotPassword = false;
 
   DateTime? _lastrequest;
   int? _requstConut;
@@ -96,14 +97,21 @@ void verifayEmail(BuildContext context){
   Future<void> _sendrestPassword(String emailRest) async {
           // send verify 
           try{
+            setState(() { loadingForgotPassword = true;});
       await FirebaseAuth.instance.sendPasswordResetEmail(email: emailRest); // send rest password
+      setState(() { loadingForgotPassword = false;});
       await upddatLastrequst(); // to update last date 
-      // ignore: use_build_context_synchronously
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).passwordrestsent , style: const TextStyle(color: Colors.white),) , backgroundColor: Colors.green,));
+      if(mounted){
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).passwordrestsent , style: const TextStyle(color: Colors.white),) , backgroundColor: Colors.green,));
+      }
+      
           }
           on FirebaseAuthException {
-            // ignore: use_build_context_synchronously
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).tryLater, style: const TextStyle(color: Colors.white)) , backgroundColor: Colors.red,));
+            setState(() { loadingForgotPassword = false;});
+            if(mounted){
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).tryLater, style: const TextStyle(color: Colors.white)) , backgroundColor: Colors.red,));
+            }
+            
           }
   }
 
@@ -161,6 +169,7 @@ void verifayEmail(BuildContext context){
             Text(S.of(context).Password, style: const TextStyle(color: blueMain , fontSize: 18 , fontWeight: FontWeight.bold),),
             GeneralTextfromfiled(heightText: 60,controller: controllerPassword, color: Colors.blueGrey , maxLength: 60 ,textInputType: TextInputType.text), 
             const SizedBox(height: 10,),
+
             // Forget password
             Row(
               children: [
@@ -179,10 +188,12 @@ void verifayEmail(BuildContext context){
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).writeEmail , style: const TextStyle(color: Colors.white),) , backgroundColor: Colors.red,));
                     }
                   },
-                  child: conter == 0 ?
+                  child: 
+                  loadingForgotPassword ? 
+                  const CircularProgressIndicator(color: blueMain) :
+                  conter == 0 ?
                   Text(S.of(context).ForgotPassword , style: const TextStyle(fontWeight: FontWeight.bold , color: blueMain),textAlign: TextAlign.right,) :
-                  // ignore: unnecessary_string_interpolations
-                  Text("${getFormattedTime()}" , style: const TextStyle(fontSize: 18),),
+                  Text(getFormattedTime() , style: const TextStyle(fontSize: 18),),
                 ),
               ],
             ) ,
@@ -211,12 +222,10 @@ void verifayEmail(BuildContext context){
             if(user != null && user.emailVerified){
               // Main page 
               setState(() {loadingLogin = false;}); // false
-              // ignore: use_build_context_synchronously
-              Navigator.of(context).pushNamedAndRemoveUntil("MainPage", (route)=> false);
+              if(context.mounted){Navigator.of(context).pushNamedAndRemoveUntil("MainPage", (route)=> false);}
             } else {
-              setState(() {loadingLogin = false;}); // salse 
-              // ignore: use_build_context_synchronously
-              verifayEmail(context);
+              setState(() {loadingLogin = false;}); // false
+              if(context.mounted){verifayEmail(context);}
             }
             
           
@@ -225,16 +234,13 @@ void verifayEmail(BuildContext context){
             setState(() {loadingLogin = false;});
             // if email or password is worng
             if(e.code == 'invalid-credential'){
-              // ignore: use_build_context_synchronously
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).worngemailorpassword , style: const TextStyle(color: Colors.white),) , backgroundColor: Colors.red,));
+              if(context.mounted){ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).worngemailorpassword , style: const TextStyle(color: Colors.white),) , backgroundColor: Colors.red,));}
               // too many requsets
             } else if(e.code == 'too-many-requests'){
-              // ignore: use_build_context_synchronously
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).toomanyrequst , style: const TextStyle(color: Colors.white),) , backgroundColor: Colors.red,));
+              if(context.mounted){ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).toomanyrequst , style: const TextStyle(color: Colors.white),) , backgroundColor: Colors.red,));}
               // any error else 
             } else {
-              // ignore: use_build_context_synchronously
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).trylater , style: const TextStyle(color: Colors.white),) , backgroundColor: Colors.red,));
+              if(context.mounted){ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(S.of(context).trylater , style: const TextStyle(color: Colors.white),) , backgroundColor: Colors.red,));}
             }
             }
                 }
@@ -267,11 +273,9 @@ void verifayEmail(BuildContext context){
                     if(user != null){
                       String? useremail =  FirebaseAuth.instance.currentUser!.email;
                       if(useremail != adminEmail){
-                        // ignore: use_build_context_synchronously
-                        Navigator.of(context).pushNamedAndRemoveUntil("MainPage", (route)=> false);
+                        if(context.mounted){Navigator.of(context).pushNamedAndRemoveUntil("MainPage", (route)=> false);}
                       } else if(useremail == adminEmail){
-                        // ignore: use_build_context_synchronously
-                        Navigator.of(context).pushNamedAndRemoveUntil("Admin", (route)=> false);
+                        if(context.mounted){Navigator.of(context).pushNamedAndRemoveUntil("Admin", (route)=> false);}
                       } 
                       
                     }  
@@ -279,10 +283,7 @@ void verifayEmail(BuildContext context){
                     setState(() {loading = false;});
               }  catch(e){
               setState(() {loading = false;});
-              // ignore: use_build_context_synchronously
-              ScaffoldMessenger.of(context).showSnackBar( SnackBar(content: 
-              // ignore: use_build_context_synchronously
-              Text(S.of(context).tryagain)));
+              if(context.mounted){ScaffoldMessenger.of(context).showSnackBar( SnackBar(content: Text(S.of(context).tryagain)));}
               // this will make the loading stop , no matter what is the state success or error
             } finally { setState(() {loading = false;});}
             }),
@@ -310,7 +311,10 @@ void verifayEmail(BuildContext context){
   controllerEmail.dispose();
   controllerPassword.dispose();
     if(_timer != null){
-      _timer!.cancel();
+      if(mounted){
+        _timer!.cancel();
+      }
+      
     }
   super.dispose();
 }
